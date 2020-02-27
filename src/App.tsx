@@ -9,9 +9,20 @@ import emptyAvatar from "./images/emptyAvatar.png"
 
 const { Option } = AutoComplete;
 
-class App extends Component {
-  constructor() {
-    super();
+export interface AppProps { compiler: string; framework: string; }
+
+type AppState = { 
+  token: any, 
+  autofillNames: any[], 
+  autofillArtists: any[],
+  autofillOptions: any[],
+  selectedArtists: any[],
+  relatedArtists: any[]
+ };
+
+class App extends Component <AppProps, AppState> {
+  constructor(props: any) {
+    super(props);
     this.state = {
       token: null,
       autofillNames: [],
@@ -27,7 +38,7 @@ class App extends Component {
   }
   componentDidMount() {
     // Set token
-    let _token = hash.access_token;
+    let _token = (hash as any).access_token;
     if (_token) {
       // Set token
       this.setState({
@@ -36,7 +47,7 @@ class App extends Component {
     }
   }
 
-  getAutocomplete(value) {
+  getAutocomplete(value: any) {
     // Make a call using the token
     $.ajax({
       url: "https://api.spotify.com/v1/search",
@@ -51,14 +62,14 @@ class App extends Component {
       },
       success: data => {
         this.setState({
-          autofillNames: data.artists.items.map((item) => item.name),
+          autofillNames: data.artists.items.map((item: any) => item.name),
           autofillArtists: data.artists.items
         });
       }
     });
   }
 
-  renderOption(a) {
+  renderOption(a: any) {
     var imgSrc;
     if(a.images.length > 0) {
       imgSrc = a.images[0].url;
@@ -66,20 +77,20 @@ class App extends Component {
       imgSrc = emptyAvatar;
     }
     return (
-      <Option key={a.id} text={a.name}>
+      <Option key={a.id} title={a.name}>
         <div><Avatar src={imgSrc}/><div style={{lineHeight: "30px", display: "inline-block", marginLeft: "5px"}}>{a.name}</div></div>
       </Option>
     );
   }
 
-  artistSelected(value) {
+  artistSelected(value: any) {
     var artistSelected = this.state.autofillArtists.filter(function (e)  {return e.id === value});
     this.setState({
       selectedArtists: this.state.selectedArtists.concat(artistSelected)
     });
   }
 
-  findRelatedArtistsAPICall(id) {
+  findRelatedArtistsAPICall(id: any) {
     // Make a call using the token
     return $.ajax({
       url: "https://api.spotify.com/v1/artists/" + id + "/related-artists",
@@ -101,11 +112,11 @@ class App extends Component {
       apiCalls[i] = this.findRelatedArtistsAPICall(id);
     }
     $.when.apply($, apiCalls)
-    .then(function () {
+    .then(function (this: any) {
       console.log(arguments);
-      var relatedArtists = [];
+      var relatedArtists: any[] = [];
       for(var i = 0; i < arguments.length; i++) {
-        relatedArtists = relatedArtists.concat(arguments[i][0].artists.map((a)=>a.name));
+        relatedArtists = relatedArtists.concat(arguments[i][0].artists.map((a: any)=>a.name));
       }
       this.setState({
         relatedArtists: [...new Set(relatedArtists)]
@@ -113,7 +124,7 @@ class App extends Component {
     }.bind(this));
   }
 
-  getAvatarFromArtist(a) {
+  getAvatarFromArtist(a: any) {
     if(a.images.length > 0) {
       return a.images[0].url;
     }
@@ -137,7 +148,7 @@ class App extends Component {
           <div>
             <AutoComplete 
               onChange={(value) => this.getAutocomplete(value)}
-              onSelect={(value, option) => this.artistSelected(value, option)} 
+              onSelect={(value) => this.artistSelected(value)} 
               autoFocus
               allowClear
               dataSource={this.state.autofillArtists.map(this.renderOption)}
