@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { AutoComplete as AutoCompleteANTD, Avatar } from 'antd';
 import { TourContext } from "../store/TourStore";
 import emptyAvatar from "../images/emptyAvatar.png";
@@ -8,6 +8,7 @@ const { Option } = AutoCompleteANTD;
 export const AutoComplete = () => {
 
     const Tour = useContext(TourContext);
+    const [autofillArtists, setAutofillArtists] = useState([]);
 
     const getAutocomplete = (value: any)  => {
         $.ajax({
@@ -22,16 +23,13 @@ export const AutoComplete = () => {
             limit: 3
           },
           success: data => {
-            Tour.setTourFields({
-                autofillNames: data.artists.items.map((item: any) => item.name),
-                autofillArtists: data.artists.items
-            });
+            setAutofillArtists(data.artists.items);
           }
         });
       }
 
       const artistSelected = (value: any) => {
-        var artistSelected = Tour.autofillArtists.filter(function (e)  {return e.id === value});
+        var artistSelected = autofillArtists.filter(function (e)  {return e.id === value});
         Tour.setTourFields({
             selectedArtists: Tour.selectedArtists.concat(artistSelected)
         });
@@ -58,7 +56,7 @@ export const AutoComplete = () => {
                 onSelect={(value) => artistSelected(value)} 
                 autoFocus
                 allowClear
-                dataSource={Tour.autofillArtists.map(renderOption)}
+                dataSource={autofillArtists.map(renderOption)}
                 placeholder="input here"
                 optionLabelProp="text"
             />

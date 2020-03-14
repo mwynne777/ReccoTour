@@ -2,10 +2,7 @@ import { createContext } from 'react';
 import { Tour } from "../models/Tour";
 
 export const tour: Tour = {
-    token: null, 
-    autofillNames: [], 
-    autofillArtists: [],
-    autofillOptions: [],
+    token: null,
     selectedArtists: [],
     relatedArtists: [],
     setTourFields: () => {}

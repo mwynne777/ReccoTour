@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { AutoComplete as AutoCompleteANTD, Avatar, List } from 'antd';
+import React, { useContext } from 'react';
+import { Avatar, List } from 'antd';
 import { TourContext } from "../store/TourStore";
 import emptyAvatar from "../images/emptyAvatar.png";
 import "../App.css";
