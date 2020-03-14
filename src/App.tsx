@@ -9,8 +9,6 @@ import { AutoComplete } from "./components/Autocomplete";
 import { SelectedArtistsList } from "./components/SelectedArtistsList";
 import { RelatedArtists } from "./components/RelatedArtists";
 
-export interface AppProps { compiler: string; framework: string; }
-
 const App = () => {
 
   const tour = useTour();
