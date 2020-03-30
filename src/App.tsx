@@ -35,12 +35,12 @@ const App = () => {
           </a>
         )}
         {tour.token && (
-          <div>
+          <>
             <AutoComplete />
             <SelectedArtistsList />
             <RelatedArtists />
-          </div>
-          )}
+          </>
+        )}
       </div>
     </TourContext.Provider>
   );

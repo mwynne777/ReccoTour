@@ -1,11 +1,13 @@
 import { createContext } from 'react';
-import { Tour } from "../models/Tour";
+import { Tour, TourIndependent, TourDependent } from "../models/Tour";
 
-export const tour: Tour = {
-    token: null,
+export const depTour: TourDependent = {
     selectedArtists: [],
-    relatedArtists: [],
-    setTourFields: () => {}
+    relatedArtists: []
 };
 
-export const TourContext = createContext<Tour>(tour);
+export const indTour: TourIndependent = {
+    token: null
+  };
+
+export const TourContext = createContext<Tour>(null);

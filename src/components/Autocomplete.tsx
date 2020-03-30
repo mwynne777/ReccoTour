@@ -30,9 +30,7 @@ export const AutoComplete = () => {
 
       const artistSelected = (value: any) => {
         var artistSelected = autofillArtists.filter(function (e)  {return e.id === value});
-        Tour.setTourFields({
-            selectedArtists: Tour.selectedArtists.concat(artistSelected)
-        });
+        Tour.addSelectedArtist(artistSelected[0]);
       }
 
       const renderOption = (a: any) => {
