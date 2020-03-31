@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Avatar, List } from 'antd';
+import { Avatar, Button, List } from 'antd';
 import { TourContext } from "../store/TourStore";
 import { getAvatarFromArtist } from "../Util/ArtistHelpers";
 import "../App.css";
@@ -19,7 +19,7 @@ export const SelectedArtistsList = () => {
                             title={(item as any).name}
                             description={(item as any).genres.join(', ')}
                         />
-                        <button onClick={() => Tour.removeSelectedArtist(item)}>Remove</button>
+                        <Button type="danger" onClick={() => Tour.removeSelectedArtist(item)}>Remove</Button>
                     </List.Item>
                 )}
             />
