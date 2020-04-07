@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Avatar, Button, List } from 'antd';
-import { TourContext } from "../store/TourStore";
-import { getAvatarFromArtist } from "../Util/ArtistHelpers";
-import "../App.css";
+import { TourContext } from "../../store/TourStore";
+import { getAvatarFromArtist } from "../../Util/ArtistHelpers";
+import "./SelectedArtistsPane.css";
 
 export const SelectedArtistsList = () => {
 
     const Tour = useContext(TourContext);
 
     return (
-        <div className="list-container">
+        <div className="sa-list-container">
             <List
                 dataSource={Tour.selectedArtists}
                 renderItem={item => (
@@ -19,7 +19,8 @@ export const SelectedArtistsList = () => {
                             title={(item as any).name}
                             description={(item as any).genres.join(', ')}
                         />
-                        <Button type="danger" onClick={() => Tour.removeSelectedArtist(item)}>Remove</Button>
+                        <Button type="danger" ghost onClick={() => Tour.removeSelectedArtist(item)}
+                            style={{margin: "3px"}}>Remove</Button>
                     </List.Item>
                 )}
             />

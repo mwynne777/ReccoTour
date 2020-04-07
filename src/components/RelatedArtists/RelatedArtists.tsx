@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { TourContext } from "../store/TourStore";
+import { TourContext } from "../../store/TourStore";
 import { Avatar, Button, List } from 'antd';
-import "../App.css";
-import { getAvatarFromArtist } from "../Util/ArtistHelpers";
+import "./RelatedArtistsPane.css";
+import { getAvatarFromArtist } from "../../Util/ArtistHelpers";
 
 export const RelatedArtists = () => {
 
@@ -10,9 +10,8 @@ export const RelatedArtists = () => {
 
     return (
         <>
-            <h2>Here are some related artists we think you'll love:</h2>
-            <div>{Tour.relatedArtists.length}</div>
-            <div className="list-container">
+            <h2>{"Here are some related artists we think you'll love:"}</h2>
+            <div className="ra-list-container">
                 <List
                     dataSource={Tour.relatedArtists}
                     renderItem={item => (
@@ -22,7 +21,8 @@ export const RelatedArtists = () => {
                                 title={(item as any).name}
                                 description={(item as any).genres.join(', ')}
                             />
-                            <Button type="danger" onClick={() => Tour.removeRelatedArtist(item)}>Remove</Button>
+                            <Button type="danger" ghost onClick={() => Tour.removeRelatedArtist(item)}
+                                style={{margin: "2px"}}>Remove</Button>
                         </List.Item>
                     )}
                 />

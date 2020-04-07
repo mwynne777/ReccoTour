@@ -1,0 +1,14 @@
+.SelectedArtistsPane {
+    width: 50%;
+    height: 100vh;
+    padding-top: 20px;
+    float: left;
+}
+
+.sa-list-container {
+    margin: auto;
+    height: 270px;
+    width: 85%;
+    padding: 15px;
+    overflow-y: auto;
+  }

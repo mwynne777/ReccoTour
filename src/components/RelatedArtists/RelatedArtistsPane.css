@@ -1,0 +1,15 @@
+.RelatedArtistsPane {
+    width: 50%;
+    height: 100vh;
+    padding-top: 20px;
+    float: right;
+}
+
+.ra-list-container {
+    margin: auto;
+    height: 270px;
+    width: 85%;
+    height: 70%;
+    padding: 15px;
+    overflow-y: auto;
+  }
