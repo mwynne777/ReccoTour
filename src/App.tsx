@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
-import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import hash from "./hash";
 import "./App.css";
 import 'antd/dist/antd.css';
 import { TourContext } from "./store/TourStore";
 import { useTour } from "./hooks/useTour";
-import { AutoComplete } from "./components/Autocomplete";
-import { SelectedArtistsList } from "./components/SelectedArtistsList";
-import { RelatedArtists } from "./components/RelatedArtists";
+import { RelatedArtistsPane } from "./components/RelatedArtists/RelatedArtistsPane";
+import { SpotifyLoginButton } from "./components/SpotifyLoginButton";
+import { SelectedArtistsPane } from "./components/SelectedArtists/SelectedArtistsPane";
 
 const App = () => {
 
@@ -24,23 +23,15 @@ const App = () => {
   return (
     <TourContext.Provider value={tour}>
       <div className="App">
-        {!tour.token && (
-          <a
-            className="btn btn--loginApp-link"
-            href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-              "%20"
-            )}&response_type=token&show_dialog=true`}
-          >
-            Login to Spotify
-          </a>
-        )}
-        {tour.token && (
+        {!tour.token && 
+          <SpotifyLoginButton />
+        }
+        {tour.token && 
           <>
-            <AutoComplete />
-            <SelectedArtistsList />
-            <RelatedArtists />
+            <SelectedArtistsPane />
+            <RelatedArtistsPane />
           </>
-        )}
+        }
       </div>
     </TourContext.Provider>
   );
