@@ -6,11 +6,11 @@ export interface TourDependent {
 }
 
 export interface TourIndependent {
-  token?: any
+  token?: string
 }
 
 export interface Tour {
-  token?: any,
+  token?: string,
   selectedArtists?: Artist[],
   relatedArtists?: RelatedArtist[],
   setTourFields?: (newVals: TourIndependent) => void,

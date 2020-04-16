@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AutoComplete as AutoCompleteANTD, Avatar } from 'antd';
 import { TourContext } from "../../store/TourStore";
-import emptyAvatar from "../../images/emptyAvatar.png";
+//import emptyAvatar from "../../images/emptyAvatar.png";
 import * as $ from "jquery";
 const { Option } = AutoCompleteANTD;
 
@@ -38,7 +38,7 @@ export const AutoComplete = () => {
       if(a.images.length > 0) {
         imgSrc = a.images[0].url;
       } else {
-        imgSrc = emptyAvatar;
+        imgSrc = require("../../images/emptyAvatar.png");
       }
       return (
         <Option key={a.id} title={a.name} style={{width: "200px"}}>

@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Avatar, Button, List } from 'antd';
 import { TourContext } from "../../store/TourStore";
 import { getAvatarFromArtist } from "../../Util/ArtistHelpers";
-import "./SelectedArtistsPane.css";
 
 export const SelectedArtistsList = () => {
 
