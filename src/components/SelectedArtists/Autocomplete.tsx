@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AutoComplete as AutoCompleteANTD, Avatar } from 'antd';
 import { TourContext } from "../../store/TourStore";
-//import emptyAvatar from "../../images/emptyAvatar.png";
-import * as $ from "jquery";
+import queryString from 'query-string'
 const { Option } = AutoCompleteANTD;
 
 export const AutoComplete = () => {
@@ -11,20 +10,24 @@ export const AutoComplete = () => {
   const [autofillArtists, setAutofillArtists] = useState([]);
 
   const getAutocomplete = (value: any)  => {
-    $.ajax({
-      url: "https://api.spotify.com/v1/search",
-      type: "GET",
-      beforeSend: xhr => {
-        xhr.setRequestHeader("Authorization", "Bearer " + Tour.token);
-      },
-      data: {
-        q: value,
-        type: "artist",
-        limit: 3
-      },
-      success: data => {
-        setAutofillArtists(data.artists.items);
-      }
+    const params = {
+      q: value,
+      type: "artist",
+      limit: 3
+    };
+
+    fetch(`https://api.spotify.com/v1/search/?${queryString.stringify(params)}`, {
+      method: "GET",
+      headers: new Headers({
+        'Authorization': 'Bearer ' + Tour.token
+      })
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      setAutofillArtists(data.artists.items);
+    })
+    .catch((error) => {
+      console.log('Error', error)
     });
   }
 
@@ -41,7 +44,7 @@ export const AutoComplete = () => {
         imgSrc = require("../../images/emptyAvatar.png");
       }
       return (
-        <Option key={a.id} title={a.name} style={{width: "200px"}}>
+        <Option key={a.id} title={a.name} style={{width: "225px"}}>
           <div><Avatar src={imgSrc}/><div style={{lineHeight: "30px", display: "inline-block", marginLeft: "5px"}}>{a.name}</div></div>
         </Option>
       );
@@ -57,7 +60,7 @@ export const AutoComplete = () => {
           dataSource={autofillArtists.map(renderOption)}
           placeholder="Search your favorite artists"
           optionLabelProp="text"
-          style={{width: "200px", marginTop: "10px"}}
+          style={{width: "225px", marginTop: "10px"}}
       />
     </>
   );

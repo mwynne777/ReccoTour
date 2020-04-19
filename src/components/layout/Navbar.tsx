@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
-import { useFetchUser } from '../../Util/user';
+import { useFetchUser } from '../../utils/user';
 
 const { Header } = Layout;
 

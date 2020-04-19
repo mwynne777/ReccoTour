@@ -58,15 +58,18 @@ const RelatedArtistsReducer = (state: TourDependent, action) : TourDependent=> {
 };
 
 const dispatchMiddleware = (token: any, dispatch, action) : void => {
-  $.ajax({
-    url: "https://api.spotify.com/v1/artists/" + action.payload.artist.id + "/related-artists",
-    type: "GET",
-    beforeSend: xhr => {
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-    },
-    success: data => {
-      dispatch({...action, payload: {...action.payload, data: data}});
-    }
+  fetch(`https://api.spotify.com/v1/artists/${action.payload.artist.id}/related-artists`, {
+    method: 'GET',
+    headers: new Headers({
+      'Authorization': 'Bearer ' + token
+    })
+  })
+  .then((response) => response.json())
+  .then((data) => {
+    dispatch({...action, payload: {...action.payload, data: data}});
+  })
+  .catch((error) => {
+    console.log('Error', error);
   });
 }
 
