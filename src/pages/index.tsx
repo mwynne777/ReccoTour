@@ -5,7 +5,7 @@ import { SpotifyLoginButton } from '../components/SpotifyLoginButton';
 import { SelectedArtistsPane } from '../components/SelectedArtists/SelectedArtistsPane';
 import { RelatedArtistsPane } from '../components/RelatedArtists/RelatedArtistsPane';
 import { useFetchUser } from '../utils/user';
-import { Spin } from '../../node_modules/antd';
+import { Spin } from 'antd';
 
 export default function Index() {
   const tour = useContext(TourContext);

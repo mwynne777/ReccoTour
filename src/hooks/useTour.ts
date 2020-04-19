@@ -2,7 +2,6 @@ import {useState, useCallback, useReducer} from 'react';
 import { Tour, TourIndependent, TourDependent } from '../models/Tour';
 import { Artist, RelatedArtist } from "../models/Artist";
 import { indTour, depTour } from "../store/TourStore";
-import * as $ from "jquery";
 
 export const useTour = (): Tour => {
   const [indState, setIndState] = useState(indTour);
