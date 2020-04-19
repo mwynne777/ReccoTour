@@ -18,16 +18,16 @@ const Navbar = () => {
         </Menu.Item>
         {user && !loading
           ? [
-              <Menu.Item key="/api/logout">
-                <Link href="/api/logout">
-                  <a>Logout</a>
-                </Link>
-              </Menu.Item>,
-              <Menu.Item key="/profile">
+            <Menu.Item key="/profile">
                 <Link href="/profile">
                   <a>Profile</a>
                 </Link>
               </Menu.Item>,
+              <Menu.Item key="/api/logout">
+                <Link href="/api/logout">
+                  <a>Logout</a>
+                </Link>
+              </Menu.Item>
             ]
           : null}
         {!user && !loading ? (

@@ -5,6 +5,7 @@ import { SpotifyLoginButton } from '../components/SpotifyLoginButton';
 import { SelectedArtistsPane } from '../components/SelectedArtists/SelectedArtistsPane';
 import { RelatedArtistsPane } from '../components/RelatedArtists/RelatedArtistsPane';
 import { useFetchUser } from '../utils/user';
+import { Spin } from '../../node_modules/antd';
 
 export default function Index() {
   const tour = useContext(TourContext);
@@ -17,16 +18,20 @@ export default function Index() {
     }
   }, [user]);
 
+  if(loading) {
+    return <Spin size="large" />;
+  }
+
   return (
     <MainLayout>
         <div className="App">
-          {(!tour.token && !loading) ?
-            <SpotifyLoginButton />
-          : 
+          {(user && tour.token) ?
             <>
               <SelectedArtistsPane />
               <RelatedArtistsPane />
             </>
+          : 
+            <SpotifyLoginButton />
           }
       </div>
     </MainLayout>
