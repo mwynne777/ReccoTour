@@ -4,6 +4,7 @@ import { TourContext } from '../store/TourStore';
 import { SpotifyLoginButton } from '../components/SpotifyLoginButton';
 import { SelectedArtistsPane } from '../components/SelectedArtists/SelectedArtistsPane';
 import { RelatedArtistsPane } from '../components/RelatedArtists/RelatedArtistsPane';
+import LoadArtistsButton from '../components/LoadArtistsButton';
 import { useFetchUser } from '../utils/user';
 import { Spin } from 'antd';
 
@@ -27,6 +28,7 @@ export default function Index() {
         <div className="App">
           {(user && tour.token) ?
             <>
+              <LoadArtistsButton />
               <SelectedArtistsPane />
               <RelatedArtistsPane />
             </>

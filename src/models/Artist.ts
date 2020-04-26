@@ -14,5 +14,3 @@ export interface Artist {
 export interface RelatedArtist extends Artist {
     selectedArtistIDs: string[]
 }
-
-export type ArtistDTO = Pick<Artist, 'id' | 'name' | 'genres' | 'images'>;

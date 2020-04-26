@@ -13,7 +13,7 @@ export const useTour = (): Tour => {
   }, []);
 
   const addSelectedArtist = useCallback((artist: Artist) => {
-    dispatchMiddleware(indState.token, dispatch, { type: "add-artist", payload: {artist: artist, token: indState.token}});
+    dispatchMiddleware(dispatch, { type: "add-artist", payload: {artist: artist, token: indState.token}});
   }, [indState.token]);
 
   const removeSelectedArtist = useCallback((artist: Artist) => {
@@ -56,11 +56,11 @@ const RelatedArtistsReducer = (state: TourDependent, action) : TourDependent=> {
   }
 };
 
-const dispatchMiddleware = (token: any, dispatch, action) : void => {
+const dispatchMiddleware = (dispatch, action) : void => {
   fetch(`https://api.spotify.com/v1/artists/${action.payload.artist.id}/related-artists`, {
     method: 'GET',
     headers: new Headers({
-      'Authorization': 'Bearer ' + token
+      'Authorization': 'Bearer ' + action.payload.token
     })
   })
   .then((response) => response.json())
