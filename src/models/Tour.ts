@@ -1,20 +1,22 @@
 import { Artist, RelatedArtist } from "./Artist";
 
 export interface TourDependent {
-  selectedArtists?: Artist[],
-  relatedArtists?: RelatedArtist[]
+  selectedArtists: Artist[],
+  relatedArtists: RelatedArtist[]
 }
 
 export interface TourIndependent {
-  token?: string
+  token: string,
+  dummy: number
 }
 
 export interface Tour {
-  token?: string,
-  selectedArtists?: Artist[],
-  relatedArtists?: RelatedArtist[],
-  setTourFields?: (newVals: TourIndependent) => void,
-  addSelectedArtist?: (artist: Artist) => void,
-  removeSelectedArtist?: (artist: Artist) => void,
-  removeRelatedArtist?: (artist: RelatedArtist) => void
+  token: string,
+  dummy: number,
+  selectedArtists: Artist[],
+  relatedArtists: RelatedArtist[],
+  setTourFields: (newVals: Partial<TourIndependent>) => void,
+  addSelectedArtist: (artists: Artist[]) => void,
+  removeSelectedArtist: (artist: Artist) => void,
+  removeRelatedArtist: (artist: RelatedArtist) => void
 }
