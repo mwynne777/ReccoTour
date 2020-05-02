@@ -6,15 +6,17 @@ export interface TourDependent {
 }
 
 export interface TourIndependent {
-  token: string
+  token: string,
+  dummy: number
 }
 
 export interface Tour {
   token: string,
+  dummy: number,
   selectedArtists: Artist[],
   relatedArtists: RelatedArtist[],
-  setTourFields: (newVals: TourIndependent) => void,
-  addSelectedArtist: (artist: Artist) => void,
+  setTourFields: (newVals: Partial<TourIndependent>) => void,
+  addSelectedArtist: (artists: Artist[]) => void,
   removeSelectedArtist: (artist: Artist) => void,
   removeRelatedArtist: (artist: RelatedArtist) => void
 }
