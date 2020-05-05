@@ -9,8 +9,9 @@ const Navbar = () => {
   const { user, loading } = useFetchUser();
 
   return (
-    <Header>
-      <Menu mode="horizontal">
+    <Header style={{backgroundColor: "white", paddingBottom:"0px"}}>
+      <h3 style={{float: "left", lineHeight: "48px", marginRight: "10px"}}>ReccoTour</h3>
+      <Menu mode="horizontal" style={{width: "100%"}}>
         <Menu.Item key="/">
           <Link href="/">
             <a>Home</a>

@@ -1,7 +1,7 @@
 import auth0 from '../../utils/auth0';
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
-import { deserializeArtists } from '../../utils/ArtistHelpers';
+import { deserializeArtists, sortArtists } from '../../utils/ArtistHelpers';
 import { UserDTO, User } from '../../models/User';
 import { IClaims } from '../../../node_modules/@auth0/nextjs-auth0/dist/session/session';
 
@@ -29,8 +29,8 @@ export default auth0.requireAuthentication(async function loadUserData(req, res)
       'UPDATE User SET selectedArtists = ?, defaultSelectedArtists = ? WHERE name = ?'
     );
     const result = await statement.run(
-      JSON.stringify(req.body.value),
-      JSON.stringify(req.body.value),
+      JSON.stringify(sortArtists(req.body.value)),
+      JSON.stringify(sortArtists(req.body.value)),
       user.name
     );
   }

@@ -13,8 +13,7 @@ const LoadArtistsButton = () => {
 
     return (
         <div style={{textAlign: 'left'}}>
-            <Button style={{position: 'absolute', margin: '72px 0px 0px 20px'}}
-                onClick={() => loadUserDefaultArtists()}
+            <Button onClick={() => loadUserDefaultArtists()}
             >
                 Load Your Artists
             </Button>

@@ -8,7 +8,7 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <UserProvider value={{ user, loading }}>
-      <Layout>
+      <Layout style={{backgroundColor: "white"}}>
         <Navbar />
           {children}
       </Layout>
