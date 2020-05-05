@@ -1,7 +1,6 @@
 .App {
   text-align: center;
-  /*background-color: #f0f7ff;*/
-  height: 100vh;
+  height: calc(100vh - 64px);
 }
 
 .App-link {
@@ -14,12 +13,7 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-}
-
 body {
-  background-color: #f0f7ff;
   color: #eee;
   font-family: Helvetica, Arial;
   font-size: 3vmin;
