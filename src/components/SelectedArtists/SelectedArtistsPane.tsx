@@ -14,10 +14,12 @@ export const SelectedArtistsPane = () => {
 
     return (
         <div className="SelectedArtistsPane"> 
-            <Card title={title} extra={<LoadArtistsButton/>}
-                style={{height: "85%", overflow: "auto", margin:"20px", boxShadow: "0 0 4px #D3D3D3"}}>
-                <SelectedArtistsList />
-            </Card>
+            <div style={{height: "85%", margin:"20px", boxShadow: "0 0 4px #D3D3D3"}}>
+                <Card title={title} extra={<LoadArtistsButton/>}
+                    style={{height: "100%"}}>
+                    <SelectedArtistsList />
+                </Card>
+            </div>
         </div>
     );
 }

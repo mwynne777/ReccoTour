@@ -47,3 +47,11 @@ body {
 .btn--login {
   margin: 0 auto;
 }
+
+.ant-list-item-meta-description {
+  padding: 0px 2px 0px 2px;
+}
+
+.ant-layout, .ant-layout .ant-layout-has-sider{
+  background-color: white;
+}

@@ -12,3 +12,8 @@
     padding: 15px;
     overflow-y: auto;
   }
+
+  .SelectedArtistsPane .ant-card-body {
+    padding: 0px;
+    height: calc(100% - 106.5px);
+}

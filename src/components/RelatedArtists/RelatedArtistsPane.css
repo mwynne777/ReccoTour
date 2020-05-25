@@ -13,3 +13,8 @@
     padding: 15px;
     overflow-y: auto;
   }
+
+.RelatedArtistsPane .ant-card-body {
+    padding: 0px;
+    height: calc(100% - 56px);
+}

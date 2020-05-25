@@ -18,10 +18,6 @@ export default function Index() {
     }
   }, [user]);
 
-  if(loading) {
-    return <Spin size="large" />;
-  }
-
   return (
     <MainLayout>
         <div className="App">
