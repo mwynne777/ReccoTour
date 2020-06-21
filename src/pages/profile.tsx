@@ -8,12 +8,12 @@ const { Sider } = Layout;
 
 export default function Profile() {
     const tour = useContext(TourContext);
-    const { user, loading } = useFetchUser();
+    const { user, loading, token } = useFetchUser();
 
     return (
         <MainLayout>
             <div className="App">
-                {(user && tour.token) &&
+                {(user && token) &&
                     <Layout>
                         <Sider width={200} className="site-layout-background">
                             <Menu

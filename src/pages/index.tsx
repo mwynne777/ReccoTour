@@ -5,23 +5,14 @@ import { SpotifyLoginButton } from '../components/SpotifyLoginButton';
 import { SelectedArtistsPane } from '../components/SelectedArtists/SelectedArtistsPane';
 import { RelatedArtistsPane } from '../components/RelatedArtists/RelatedArtistsPane';
 import { useFetchUser } from '../utils/user';
-import { Spin } from 'antd';
 
 export default function Index() {
-  const tour = useContext(TourContext);
-  const { user, loading } = useFetchUser();
-
-  useEffect(() => {
-    // Set token
-    if (user && user['https://my.ns/spotify/access_token']) {
-      tour.setTourFields( {token: user['https://my.ns/spotify/access_token']} );
-    }
-  }, [user]);
+  const { user, loading, token } = useFetchUser();
 
   return (
     <MainLayout>
         <div className="App">
-          {(user && tour.token) ?
+          {(user && token) ?
             <>
               <SelectedArtistsPane />
               <RelatedArtistsPane />

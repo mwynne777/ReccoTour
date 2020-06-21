@@ -1,12 +1,19 @@
+import React, { useEffect, useState } from 'react';
 import "../App.css";
 import 'antd/dist/antd.css';
 import "../components/RelatedArtists/RelatedArtistsPane.css";
 import "../components/SelectedArtists/SelectedArtistsPane.css";
 import { useTour } from "../hooks/useTour";
 import { TourContext } from "../store/TourStore";
+import { useFetchUser } from "../utils/user";
 
 export default function MyApp({ Component, pageProps }) {
   const tour = useTour();
+  const { token } = useFetchUser();
+
+  useEffect(() => {
+    tour.setTourFields({token: token});
+  },[token]);
 
   return <TourContext.Provider value={tour}><Component {...pageProps} /></TourContext.Provider>
 }

@@ -8,6 +8,7 @@ const LoadArtistsButton = () => {
     const loadUserDefaultArtists = async () => {
         const response = await fetch('/api/user');
         const res = await response.json();
+        console.log(res);
         Tour.addSelectedArtist(res.selectedArtists);
     }
 
