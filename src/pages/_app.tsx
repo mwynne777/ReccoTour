@@ -6,14 +6,15 @@ import "../components/SelectedArtists/SelectedArtistsPane.css";
 import { useTour } from "../hooks/useTour";
 import { TourContext } from "../store/TourStore";
 import { useFetchUser } from "../utils/user";
+import { spotifyTokenName } from '../utils/auth0';
 
 export default function MyApp({ Component, pageProps }) {
   const tour = useTour();
-  const { token } = useFetchUser();
+  const { user } = useFetchUser();
 
   useEffect(() => {
-    tour.setTourFields({token: token});
-  },[token]);
+    tour.setTourFields({ token: user ? user[spotifyTokenName] : null });
+  }, [user]);
 
   return <TourContext.Provider value={tour}><Component {...pageProps} /></TourContext.Provider>
 }

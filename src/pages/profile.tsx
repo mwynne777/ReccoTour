@@ -3,17 +3,18 @@ import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
 import { Layout, Menu, Spin } from 'antd';
+import { spotifyTokenName } from '../utils/auth0';
 
 const { Sider } = Layout;
 
 export default function Profile() {
     const tour = useContext(TourContext);
-    const { user, loading, token } = useFetchUser();
+    const { user, loading } = useFetchUser();
 
     return (
         <MainLayout>
             <div className="App">
-                {(user && token) &&
+                {(user && user[spotifyTokenName]) &&
                     <Layout>
                         <Sider width={200} className="site-layout-background">
                             <Menu

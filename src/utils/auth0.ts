@@ -19,3 +19,5 @@ export default initAuth0({
     clockTolerance: 10000,
   },
 });
+
+export const spotifyTokenName = 'https://my.ns/spotify/access_token';

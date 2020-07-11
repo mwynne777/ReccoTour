@@ -1,12 +1,6 @@
 import React from 'react';
 import fetch from 'isomorphic-unfetch';
 
-export interface AuthData {
-  user: any,
-  loading: boolean,
-  token: string
-}
-
 // Use a global to save the user, so we don't have to fetch it again after page navigations
 let userState;
 
@@ -40,8 +34,7 @@ export const useUser = () => React.useContext(User);
 export const useFetchUser = () => {
   const [data, setUser] = React.useState({
     user: userState || null,
-    loading: userState === undefined,
-    token: null
+    loading: userState === undefined
   });
 
   React.useEffect(() => {
@@ -54,11 +47,7 @@ export const useFetchUser = () => {
     fetchUser().then(user => {
       // Only set the user if the component is still mounted
       if (isMounted) {
-        let token = null;
-        if (user && user['https://my.ns/spotify/access_token']) {
-            token = user['https://my.ns/spotify/access_token'];
-        }
-        setUser({ user, loading: false, token: token });
+        setUser({ user, loading: false });
       }
     });
 
