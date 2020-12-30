@@ -10,6 +10,13 @@ module.exports = {
                 source: '/discovery/:slug*',
                 destination: 'https://app.ticketmaster.com/discovery/:slug*', // Matched parameters can be used in the destination
             },
+            {
+                source: '/maps/:slug*',
+                destination: 'https://maps.googleapis.com/maps/:slug*'
+            }
         ]
+    },
+    env: {
+        googlePlacesAPIKey: 'AIzaSyAGQsm1kCvSGliQKoNsa09ofuJz2lhRyIg'
     }
 }
