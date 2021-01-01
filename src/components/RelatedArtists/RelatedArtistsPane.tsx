@@ -31,7 +31,7 @@ export const RelatedArtistsPane = () => {
     const createAllRequests = (artists: Artist[]): string[] => {
         let requests = [];
         artists.forEach(a => {
-            requests.push(`/discovery/v2/events?apikey=ZysF29VGfUq33IKG2ujdgB75x6BL3Gie&keyword=${a.name}&radius=200&unit=miles&locale=*&city=ft%20lauderdale&countryCode=US`);
+            requests.push(`/discovery/v2/events?apikey=${process.env.ticketmasterAPIKey}&keyword=${a.name}&radius=200&unit=miles&locale=*&city=ft%20lauderdale&countryCode=US`);
         });
         return requests;
     }

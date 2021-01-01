@@ -3,7 +3,7 @@ import moment from 'moment';
 import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
-import { AutoComplete, DatePicker, Input, Layout } from 'antd';
+import { AutoComplete, Button, DatePicker, Input, Layout } from 'antd';
 const { Option } = AutoComplete;
 const { RangePicker } = DatePicker;
 import { SelectValue } from '../../node_modules/antd/lib/select';
@@ -37,20 +37,29 @@ export default function Events() {
 
         if (locationSplit.length === 0) return result;
 
-        if (location.split.length === 3) {
+        if (locationSplit.length === 3) {
             result.stateCode = locationSplit[1];
             result.countryCode = locationSplit[2];
         } else if (locationSplit.length === 2) {
             result.countryCode = locationSplit[1];
         }
         result.city = locationSplit[0];
-
         return result;
     };
 
     const isDateDisabled = useCallback((currentDate: moment.Moment): boolean => {
         return currentDate < moment() || currentDate > moment().add(1, 'y');
     }, []);
+
+
+    const onSubmit = async (): Promise<void> => {
+        const selectedArtist = tour.selectedArtists[0];
+        const locationCodes = getLocationCodes(selectedCity);
+        const uri = `/discovery/v2/events?apikey=${process.env.ticketmasterAPIKey}&keyword=${selectedArtist.name}&radius=50&unit=miles&locale=*&city=${locationCodes.city}&stateCode=${locationCodes.stateCode}&countryCode=US`;
+        const result = await fetch(uri);
+        const resultJson = await result.json();
+        console.log(resultJson);
+    };
 
     return (
         <MainLayout>
@@ -70,6 +79,7 @@ export default function Events() {
                             defaultValue={selectedDates}
                             disabledDate={isDateDisabled}
                             onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
+                        <Button onClick={onSubmit}>Search for events</Button>
                     </>
                 }
             </div>
