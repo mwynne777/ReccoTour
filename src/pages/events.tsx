@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
 import moment from 'moment';
+import { RateLimiter } from 'limiter';
 import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
@@ -8,6 +9,8 @@ const { Option } = AutoComplete;
 const { RangePicker } = DatePicker;
 import { SelectValue } from '../../node_modules/antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
+import { Artist } from '../models/Artist';
+import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
 
 interface LocationWithCodes {
     city: string,
@@ -15,12 +18,16 @@ interface LocationWithCodes {
     stateCode: string
 }
 
+// Trying 10ms of buffer to avoid hitting rate limit
+var limiter = new RateLimiter(1, 210);
+
 export default function Events() {
     const tour = useContext(TourContext);
     const { user, loading } = useFetchUser();
     const [selectedCity, setSelectedCity] = useState<string>('');
     const [autoFillLocations, setAutoFillLocations] = useState([]);
     const [selectedDates, setSelectedDates] = useState<[moment.Moment, moment.Moment]>([moment(), moment().add(1, 'w')]);
+    const [events, setEvents] = useState<LocalEvent[]>([]);
 
     const getGoogleAutoComplete = async (value: SelectValue) => {
         // TODO: Add Google Places types
@@ -51,14 +58,25 @@ export default function Events() {
         return currentDate < moment() || currentDate > moment().add(1, 'y');
     }, []);
 
-
-    const onSubmit = async (): Promise<void> => {
-        const selectedArtist = tour.selectedArtists[0];
-        const locationCodes = getLocationCodes(selectedCity);
+    const callTicketmasterAPI = async (selectedArtist: Artist, locationCodes: LocationWithCodes) => {
         const uri = `/discovery/v2/events?apikey=${process.env.ticketmasterAPIKey}&keyword=${selectedArtist.name}&radius=50&unit=miles&locale=*&city=${locationCodes.city}&stateCode=${locationCodes.stateCode}&countryCode=US`;
         const result = await fetch(uri);
         const resultJson = await result.json();
-        console.log(resultJson);
+        if (resultJson._embedded) {
+            const newEvents = resultJson._embedded.events.map(event => mapTicketmasterEventToLocalEvent(event));
+            setEvents(oldEvents => [...oldEvents, ...newEvents]);
+        }
+    };
+
+    const onSubmit = () => {
+        const locationCodes = getLocationCodes(selectedCity);
+        const selectedArtists = tour.selectedArtists.concat(tour.relatedArtists)
+        // TODO: look into oibackoff (or something simlar) for retrying failed requests
+        selectedArtists.forEach(element => {
+            limiter.removeTokens(1, function () {
+                callTicketmasterAPI(element, locationCodes);
+            });
+        });
     };
 
     return (
