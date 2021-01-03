@@ -96,8 +96,9 @@ export default function Events() {
                             allowClear
                             dataSource={autoFillLocations}
                             placeholder='Enter your location'
-                            style={{ width: '225px', marginTop: '10px' }} />
+                            style={{ width: '225px', marginRight: '5px' }} />
                         <RangePicker
+                            style={{ marginRight: '5px' }}
                             format='MM-DD-YYYY'
                             defaultValue={selectedDates}
                             disabledDate={isDateDisabled}
