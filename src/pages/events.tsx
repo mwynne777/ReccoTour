@@ -11,6 +11,7 @@ import { SelectValue } from '../../node_modules/antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
 import { Artist } from '../models/Artist';
 import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
+import EventsList from '../components/Events/EventsList';
 
 interface LocationWithCodes {
     city: string,
@@ -28,6 +29,7 @@ export default function Events() {
     const [autoFillLocations, setAutoFillLocations] = useState([]);
     const [selectedDates, setSelectedDates] = useState<[moment.Moment, moment.Moment]>([moment(), moment().add(1, 'w')]);
     const [events, setEvents] = useState<LocalEvent[]>([]);
+    const [callsRemaining, setCallsRemaining] = useState<number>(tour.selectedArtists.concat(tour.relatedArtists).length);
 
     const getGoogleAutoComplete = async (value: SelectValue) => {
         // TODO: Add Google Places types
@@ -54,6 +56,7 @@ export default function Events() {
         return result;
     };
 
+    //Move to util file
     const isDateDisabled = useCallback((currentDate: moment.Moment): boolean => {
         return currentDate < moment() || currentDate > moment().add(1, 'y');
     }, []);
@@ -63,9 +66,11 @@ export default function Events() {
         const result = await fetch(uri);
         const resultJson = await result.json();
         if (resultJson._embedded) {
+            console.log(resultJson._embedded.events);
             const newEvents = resultJson._embedded.events.map(event => mapTicketmasterEventToLocalEvent(event));
             setEvents(oldEvents => [...oldEvents, ...newEvents]);
         }
+        setCallsRemaining(oldRemaining => oldRemaining - 1);
     };
 
     const onSubmit = () => {
@@ -98,6 +103,9 @@ export default function Events() {
                             disabledDate={isDateDisabled}
                             onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
                         <Button onClick={onSubmit}>Search for events</Button>
+                        {callsRemaining === 0 &&
+                            <EventsList events={events} />
+                        }
                     </>
                 }
             </div>

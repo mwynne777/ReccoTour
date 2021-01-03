@@ -6,7 +6,8 @@ export default interface LocalEvent {
     priceMax: number,
     priceMin: number,
     timezone: string,
-    url: string
+    url: string,
+    venue: string
 };
 
 interface ImageInfo {
@@ -32,6 +33,7 @@ export const mapTicketmasterEventToLocalEvent = (ticketmasterEvent: any): LocalE
         priceMax: ticketmasterEvent.priceRanges[0].max,
         priceMin: ticketmasterEvent.priceRanges[0].min,
         timezone: ticketmasterEvent.dates.timezone,
-        url: ticketmasterEvent.url
+        url: ticketmasterEvent.url,
+        venue: ticketmasterEvent._embedded.venues[0].name
     };
 };
