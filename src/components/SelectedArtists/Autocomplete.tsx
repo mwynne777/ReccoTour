@@ -58,7 +58,7 @@ export const AutoComplete = () => {
         autoFocus
         allowClear
         dataSource={autofillArtists.map(renderOption)}
-        placeholder="Search your favorite artists"
+        placeholder="Add more artists"
         optionLabelProp="text"
         style={{ width: "225px", marginTop: "10px" }}
       />

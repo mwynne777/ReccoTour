@@ -12,20 +12,9 @@ const LoadArtistsButton = () => {
         Tour.addSelectedArtist(res.selectedArtists);
     }
 
-    const loadSpotifyTopArtists = async () => {
-        const result = await fetch('https://api.spotify.com/v1/me/top/artists?limit=5', {
-            headers: new Headers({
-                'Authorization': 'Bearer ' + Tour.token
-            })
-        });
-        const resultJson = await result.json();
-        console.log(resultJson);
-        Tour.addSelectedArtist(resultJson.items);
-    };
-
     return (
         <div style={{ textAlign: 'left' }}>
-            <Button onClick={loadSpotifyTopArtists}>
+            <Button onClick={loadUserDefaultArtists}>
                 Load Your Artists
             </Button>
         </div>
