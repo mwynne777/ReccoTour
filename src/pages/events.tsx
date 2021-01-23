@@ -58,7 +58,7 @@ export default function Events() {
 
     //Move to util file
     const isDateDisabled = useCallback((currentDate: moment.Moment): boolean => {
-        return currentDate < moment() || currentDate > moment().add(1, 'y');
+        return currentDate < moment().subtract(1, 'd') || currentDate > moment().add(1, 'y');
     }, []);
 
     const callTicketmasterAPI = async (selectedArtist: Artist, locationCodes: LocationWithCodes) => {

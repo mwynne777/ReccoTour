@@ -1,4 +1,4 @@
-import { useState, useCallback, useReducer } from 'react';
+import { useState, useCallback, useReducer, useEffect } from 'react';
 import { Tour, TourIndependent, TourDependent } from '../models/Tour';
 import { Artist, RelatedArtist } from "../models/Artist";
 import { indTour, depTour } from "../store/TourStore";
@@ -7,6 +7,20 @@ export const useTour = (): Tour => {
   const [indState, setIndState] = useState(indTour);
 
   const [depState, dispatch] = useReducer(RelatedArtistsReducer, depTour);
+
+  useEffect(() => {
+    async function loadSpotifyTopArtists() {
+      const result = await fetch('https://api.spotify.com/v1/me/top/artists?limit=10', {
+        headers: new Headers({
+          'Authorization': 'Bearer ' + indState.token
+        })
+      });
+      const resultJson = await result.json();
+      addSelectedArtist(resultJson.items);
+    }
+    if (indState.token)
+      loadSpotifyTopArtists();
+  }, [indState.token]);
 
   const setTourFields = useCallback((currentVal: Partial<TourIndependent>): void => {
     setIndState(indState => ({ ...indState, ...currentVal }));

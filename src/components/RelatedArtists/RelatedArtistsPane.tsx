@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Link from 'next/link';
 import { RelatedArtists } from "./RelatedArtists";
-import { Button } from 'antd';
+import { Button, Icon } from 'antd';
 import { TourContext } from '../../store/TourStore';
 import { Artist } from '../../models/Artist';
 
@@ -41,7 +41,7 @@ export const RelatedArtistsPane = () => {
             <RelatedArtists />
             <Link href='/events'>
                 <Button style={{ float: "right", margin: "30px 50px 0px 0px" }} disabled={Tour.selectedArtists.length === 0}>
-                    Submit
+                    Find Tickets <Icon type="arrow-right" />
                 </Button>
             </Link>
         </div>
