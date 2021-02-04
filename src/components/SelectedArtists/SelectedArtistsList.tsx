@@ -9,17 +9,17 @@ export const SelectedArtistsList = () => {
 
     return (
         <List
-            style={{overflow: "auto", height: "100%", padding: "0px 24px"}}
+            style={{ overflow: "auto", height: "100%", padding: "0px 24px" }}
             dataSource={Tour.selectedArtists}
             renderItem={item => (
                 <List.Item key={(item as any).id}>
                     <List.Item.Meta
-                        avatar={ <Avatar src={getAvatarFromArtist(item)} /> }
+                        avatar={<Avatar style={{ marginTop: '8px' }} src={getAvatarFromArtist(item)} />}
                         title={(item as any).name}
                         description={(item as any).genres.join(', ')}
                     />
                     <Button type="danger" ghost onClick={() => Tour.removeSelectedArtist(item)}
-                        style={{margin: "3px"}}>Remove</Button>
+                        style={{ margin: "3px" }}>Remove</Button>
                 </List.Item>
             )}
         />

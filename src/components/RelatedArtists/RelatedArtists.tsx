@@ -17,7 +17,7 @@ export const RelatedArtists = () => {
                     renderItem={item => (
                         <List.Item key={(item as any).id}>
                             <List.Item.Meta
-                                avatar={<Avatar src={getAvatarFromArtist(item)} />}
+                                avatar={<Avatar style={{ marginTop: '19px' }} src={getAvatarFromArtist(item)} />}
                                 title={(item as any).name}
                                 description={`${(item as any).genres.join(', ')} \nSimilar to: ${(item as any).selectedArtistIDs.map(a => Tour.selectedArtists.find(s => s.id === a).name).join(', ')}`}
                                 style={{ whiteSpace: 'pre-line' }}
