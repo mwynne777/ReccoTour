@@ -1,13 +1,16 @@
 import React from "react";
+import Button from 'antd/lib/button';
 
 export const SpotifyLoginButton = () => {
 
     return (
-        <a className="btn btn--loginApp-link" 
-            href={`${process.env.authEndpoint}?client_id=${process.env.clientId}&redirect_uri=${process.env.redirectUri}&scope=${process.env.scopes}
-                &response_type=token&show_dialog=true`}
+        <Button
+            type='primary'
+            shape='round'
+            href={'/api/login'}
+            style={{ width: '100px', margin: '0 auto' }}
         >
-            Login to Spotify
-        </a>
+            Login
+        </Button>
     );
 }
