@@ -7,7 +7,7 @@ import { useFetchUser } from '../utils/user';
 import { AutoComplete, Button, DatePicker, Input, Layout } from 'antd';
 const { Option } = AutoComplete;
 const { RangePicker } = DatePicker;
-import { SelectValue } from '../../node_modules/antd/lib/select';
+import { SelectValue } from 'antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
 import { Artist } from '../models/Artist';
 import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';

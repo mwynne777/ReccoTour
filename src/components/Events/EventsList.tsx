@@ -1,5 +1,5 @@
 import React from 'react';
-import List from '../../../node_modules/antd/lib/list';
+import List from 'antd/lib/list';
 import LocalEvent from '../../models/Event';
 import EventsListItem from './EventsListItem';
 

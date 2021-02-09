@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import "../App.css";
 import 'antd/dist/antd.css';
+import "../App.css";
 import "../components/RelatedArtists/RelatedArtistsPane.css";
 import "../components/SelectedArtists/SelectedArtistsPane.css";
 import { useTour } from "../hooks/useTour";

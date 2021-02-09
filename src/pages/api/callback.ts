@@ -1,5 +1,5 @@
 import auth0 from '../../utils/auth0';
-import { NextApiRequest } from '../../../node_modules/next';
+import { NextApiRequest } from 'next';
 
 function patchReqForCallback(req: NextApiRequest): NextApiRequest {
   const { state } = req.query;

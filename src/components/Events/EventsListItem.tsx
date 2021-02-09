@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import LocalEvent from '../../models/Event';
-import { Button } from '../../../node_modules/antd';
+import { Button } from 'antd';
 
 interface EventsListItemProps {
     event: LocalEvent

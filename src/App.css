@@ -51,3 +51,11 @@ body {
 .ant-layout, .ant-layout .ant-layout-has-sider{
   background-color: white;
 }
+
+.ant-menu-horizontal > .ant-menu-item > a {
+  color: white;
+}
+
+.ant-menu-horizontal > .ant-menu-item > a:hover {
+  color: #1ed760;
+}

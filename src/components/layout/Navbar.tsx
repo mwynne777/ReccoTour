@@ -2,44 +2,63 @@ import React from 'react';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
 import { useFetchUser } from '../../utils/user';
+import styled, { css } from 'styled-components';
 
 const { Header } = Layout;
+
+const StyledHeader = styled(Header)`
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  background-color: black;
+`;
+
+const StyledMenu = styled(Menu)`
+  line-height: 64px;
+  background-color: black;
+  border-bottom: none;
+  height: 64px;
+`;
+
+const StyledMenuItem = styled(Menu.Item)`
+  border-bottom: none !important;
+`;
 
 const Navbar = () => {
   const { user, loading } = useFetchUser();
 
   return (
-    <Header style={{backgroundColor: "white", paddingBottom:"0px"}}>
-      <h3 style={{float: "left", lineHeight: "48px", marginRight: "10px"}}>ReccoTour</h3>
-      <Menu mode="horizontal" style={{width: "100%"}}>
-        <Menu.Item key="/">
+    <StyledHeader >
+      <h3 style={{ float: "left", lineHeight: "56px", marginRight: "10px" }}>ReccoTour</h3>
+      <StyledMenu mode="horizontal">
+        <StyledMenuItem key="/">
           <Link href="/">
             <a>Home</a>
           </Link>
-        </Menu.Item>
+        </StyledMenuItem>
         {user && !loading
           ? [
-            <Menu.Item key="/profile">
-                <Link href="/profile">
-                  <a>Profile</a>
-                </Link>
-              </Menu.Item>,
-              <Menu.Item key="/api/logout">
-                <Link href="/api/logout">
-                  <a>Logout</a>
-                </Link>
-              </Menu.Item>
-            ]
+            <StyledMenuItem key="/profile" >
+              <Link href="/profile">
+                <a>Profile</a>
+              </Link>
+            </StyledMenuItem>,
+            <StyledMenuItem key="/api/logout" >
+              <Link href="/api/logout">
+                <a>Logout</a>
+              </Link>
+            </StyledMenuItem>
+          ]
           : null}
         {!user && !loading ? (
-          <Menu.Item key="/api/login">
+          <StyledMenuItem key="/api/login">
             <Link href="/api/login">
               <a>Login</a>
             </Link>
-          </Menu.Item>
+          </StyledMenuItem>
         ) : null}
-      </Menu>
-    </Header>
+      </StyledMenu>
+    </StyledHeader>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoComplete } from "./Autocomplete";
 import { SelectedArtistsList } from "./SelectedArtistsList";
-import Card from '../../../node_modules/antd/lib/card';
+import Card from 'antd/lib/card';
 
 export const SelectedArtistsPane = () => {
 
