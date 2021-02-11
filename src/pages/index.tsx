@@ -12,14 +12,16 @@ export default function Index() {
 
   return (
     <MainLayout>
-      <div className="App">
-        {(user && user[spotifyTokenName]) &&
-          <>
-            <SelectedArtistsPane />
-            <RelatedArtistsPane />
-          </>
-        }
-      </div>
+      {(user && user[spotifyTokenName]) ?
+        <>
+          <SelectedArtistsPane />
+          <RelatedArtistsPane />
+        </>
+        :
+        <>
+
+        </>
+      }
     </MainLayout>
   );
 }

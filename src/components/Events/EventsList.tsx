@@ -2,6 +2,12 @@ import React from 'react';
 import List from 'antd/lib/list';
 import LocalEvent from '../../models/Event';
 import EventsListItem from './EventsListItem';
+import styled from 'styled-components';
+
+const StyledEventsList = styled(List)`
+    margin-top: 10px;
+    background-color: rgb(24, 24, 24);
+`;
 
 interface EventsListProps {
     events: LocalEvent[]
@@ -9,8 +15,7 @@ interface EventsListProps {
 
 const EventsList: React.FC<EventsListProps> = ({ events }) => {
     return (
-        <List
-            style={{ padding: '25px 75px' }}
+        <StyledEventsList
             itemLayout="vertical"
             size="large"
             dataSource={events}

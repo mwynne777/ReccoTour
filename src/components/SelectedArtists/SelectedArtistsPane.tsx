@@ -2,22 +2,40 @@ import React from 'react';
 import { AutoComplete } from "./Autocomplete";
 import { SelectedArtistsList } from "./SelectedArtistsList";
 import Card from 'antd/lib/card';
+import styled, { css } from 'styled-components';
+
+const StyledSelectedArtistsPane = styled.div`
+    width: 50%;
+    height: 100%;
+    padding-top: 20px;
+    float: left;
+    background-color: black;
+`;
+
+const StyledSelectedArtistsListWrapper = styled.div`
+    height: 85%;
+    margin: 20px;
+`;
+
+const StyledTitle = styled.h4`
+    color: white;
+`;
 
 export const SelectedArtistsPane = () => {
 
     const title =
         <>
-            <h4>Here are your top artists on Spotify: </h4>
+            <StyledTitle>Here are your top artists on Spotify: </StyledTitle>
             <AutoComplete />
         </>;
 
     return (
-        <div className="SelectedArtistsPane">
-            <div style={{ height: "85%", margin: "20px", boxShadow: "0 0 4px #D3D3D3" }}>
-                <Card title={title} style={{ height: "100%" }}>
+        <StyledSelectedArtistsPane className="SelectedArtistsPane" >
+            <StyledSelectedArtistsListWrapper>
+                <Card title={title} style={{ height: "100%", border: 'none' }}>
                     <SelectedArtistsList />
                 </Card>
-            </div>
-        </div>
+            </StyledSelectedArtistsListWrapper>
+        </StyledSelectedArtistsPane>
     );
 }

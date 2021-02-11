@@ -4,6 +4,21 @@ import { RelatedArtists } from "./RelatedArtists";
 import { Button, Icon } from 'antd';
 import { TourContext } from '../../store/TourStore';
 import { Artist } from '../../models/Artist';
+import styled, { css } from 'styled-components';
+
+const StyledSubmitButton = styled(Button)`
+    float: right; 
+    margin: 30px 50px 0px 0px;
+    &:hover {
+        transform: scale(1.05, 1.05);
+        -moz-transform: scale(1.05, 1.05);
+        -ms-transform: scale(1.05, 1.05);
+        -webkit-transform: scale(1.05, 1.05);
+        -o-transform: scale(1.05, 1.05);
+        color: rgba(0, 0, 0, 0.65);
+        border-color: rgba(0, 0, 0, 0.65);
+    }
+`;
 
 export const RelatedArtistsPane = () => {
     const Tour = useContext(TourContext);
@@ -40,9 +55,9 @@ export const RelatedArtistsPane = () => {
         <div className="RelatedArtistsPane">
             <RelatedArtists />
             <Link href='/events'>
-                <Button style={{ float: "right", margin: "30px 50px 0px 0px" }} disabled={Tour.selectedArtists.length === 0}>
+                <StyledSubmitButton disabled={Tour.selectedArtists.length === 0}>
                     Find Tickets <Icon type="arrow-right" />
-                </Button>
+                </StyledSubmitButton>
             </Link>
         </div>
     );

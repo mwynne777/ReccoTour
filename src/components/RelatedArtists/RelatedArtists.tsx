@@ -8,11 +8,11 @@ export const RelatedArtists = () => {
     const Tour = useContext(TourContext);
 
     return (
-        <div style={{ height: "75%", margin: "20px", boxShadow: "0 0 4px #D3D3D3" }}>
+        <div style={{ height: "75%", margin: "20px" }}>
             <Card title="Here are some related artists we think you'll love:"
-                style={{ height: "100%" }}>
+                style={{ height: "100%", border: 'none' }}>
                 <List
-                    style={{ overflow: "auto", height: "100%", padding: "0px 24px" }}
+                    style={{ overflow: "auto", height: "100%" }}
                     dataSource={Tour.relatedArtists}
                     renderItem={item => (
                         <List.Item key={(item as any).id}>

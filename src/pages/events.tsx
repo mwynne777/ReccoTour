@@ -12,6 +12,11 @@ import { spotifyTokenName } from '../utils/auth0';
 import { Artist } from '../models/Artist';
 import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
 import EventsList from '../components/Events/EventsList';
+import styled from 'styled-components';
+
+const StyledEventsPageTitle = styled.h2`
+    color: white;
+`;
 
 interface LocationWithCodes {
     city: string,
@@ -89,7 +94,7 @@ export default function Events() {
             <div className='App'>
                 {(user && user[spotifyTokenName]) &&
                     <>
-                        <h2>Finally, tell us where and when you want to see your favorite artists:</h2>
+                        <StyledEventsPageTitle>Finally, tell us where and when you want to see your favorite artists:</StyledEventsPageTitle>
                         <AutoComplete
                             onChange={(value) => getGoogleAutoComplete(value)}
                             onSelect={(value) => setSelectedCity(value.toString())}
@@ -104,7 +109,7 @@ export default function Events() {
                             disabledDate={isDateDisabled}
                             onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
                         <Button onClick={onSubmit}>Search for events</Button>
-                        {callsRemaining === 0 &&
+                        {callsRemaining === 0 && events.length > 0 &&
                             <EventsList events={events} />
                         }
                     </>

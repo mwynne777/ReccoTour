@@ -9,8 +9,11 @@ const StyledSpotifyLoginButton = styled(Button)`
     color: white;
     border: none;
     &:hover {
-        background-color: white !important;
-        color: black;
+        transform: scale(1.08, 1.08);
+        -moz-transform: scale(1.08, 1.08);
+        -ms-transform: scale(1.08, 1.08);
+        -webkit-transform: scale(1.08, 1.08);
+        -o-transform: scale(1.08, 1.08);
     }
 `;
 

@@ -1,10 +1,3 @@
-.SelectedArtistsPane {
-    width: 50%;
-    height: 100%;
-    padding-top: 20px;
-    float: left;
-}
-
 .sa-list-container {
     margin: auto;
     height: 270px;
@@ -13,7 +6,39 @@
     overflow-y: auto;
   }
 
-  .SelectedArtistsPane .ant-card-body {
+.SelectedArtistsPane .ant-card-body {
     padding: 0px;
     height: calc(100% - 106.5px);
 }
+
+.ant-card {
+    background-color: rgb(24, 24, 24);
+}
+
+.ant-card-head {
+    color: white;
+    border-bottom: 1px solid hsla(0,0%,100%,.3);
+}
+
+.ant-list-item {
+    padding: 12px 24px;
+}
+
+.ant-list-split .ant-list-item {
+    border-bottom: 1px solid hsla(0,0%,100%,.3);
+}
+
+.ant-list-item:hover {
+    background-color: hsla(0,0%,100%,.3);
+}
+
+.ant-list-item-meta-title {
+    color: white;
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+.ant-list-item-meta-description {
+    color: #b3b3b3;
+}
+

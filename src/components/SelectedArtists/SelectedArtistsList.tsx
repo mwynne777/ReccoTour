@@ -9,7 +9,7 @@ export const SelectedArtistsList = () => {
 
     return (
         <List
-            style={{ overflow: "auto", height: "100%", padding: "0px 24px" }}
+            style={{ overflow: "auto", height: "100%" }}
             dataSource={Tour.selectedArtists}
             renderItem={item => (
                 <List.Item key={(item as any).id}>
