@@ -13,9 +13,14 @@ import { Artist } from '../models/Artist';
 import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
 import EventsList from '../components/Events/EventsList';
 import styled from 'styled-components';
+import { StyledSpotifyButton } from '../components/SpotifyLoginButton';
 
 const StyledEventsPageTitle = styled.h2`
     color: white;
+`;
+
+const StyledEventsSearchButton = styled(StyledSpotifyButton)`
+    margin-left: 5px;
 `;
 
 interface LocationWithCodes {
@@ -91,30 +96,28 @@ export default function Events() {
 
     return (
         <MainLayout>
-            <div className='App'>
-                {(user && user[spotifyTokenName]) &&
-                    <>
-                        <StyledEventsPageTitle>Finally, tell us where and when you want to see your favorite artists:</StyledEventsPageTitle>
-                        <AutoComplete
-                            onChange={(value) => getGoogleAutoComplete(value)}
-                            onSelect={(value) => setSelectedCity(value.toString())}
-                            allowClear
-                            dataSource={autoFillLocations}
-                            placeholder='Enter your location'
-                            style={{ width: '225px', marginRight: '5px' }} />
-                        <RangePicker
-                            style={{ marginRight: '5px' }}
-                            format='MM-DD-YYYY'
-                            defaultValue={selectedDates}
-                            disabledDate={isDateDisabled}
-                            onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
-                        <Button onClick={onSubmit}>Search for events</Button>
-                        {callsRemaining === 0 && events.length > 0 &&
-                            <EventsList events={events} />
-                        }
-                    </>
-                }
-            </div>
+            {(user && user[spotifyTokenName]) &&
+                <>
+                    <StyledEventsPageTitle>Finally, tell us where and when you want to see your favorite artists:</StyledEventsPageTitle>
+                    <AutoComplete
+                        onChange={(value) => getGoogleAutoComplete(value)}
+                        onSelect={(value) => setSelectedCity(value.toString())}
+                        allowClear
+                        dataSource={autoFillLocations}
+                        placeholder='Enter your location'
+                        style={{ width: '225px', marginRight: '5px' }} />
+                    <RangePicker
+                        style={{ marginRight: '5px' }}
+                        format='MM-DD-YYYY'
+                        defaultValue={selectedDates}
+                        disabledDate={isDateDisabled}
+                        onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
+                    <StyledEventsSearchButton onClick={onSubmit} shape='round'>Search for events</StyledEventsSearchButton>
+                    {callsRemaining === 0 && events.length > 0 &&
+                        <EventsList events={events} />
+                    }
+                </>
+            }
         </MainLayout>
     );
 }

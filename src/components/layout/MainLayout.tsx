@@ -13,7 +13,7 @@ const StyledContent = styled(Content)`
   margin-top: 64px;
   text-align: center;
   height: calc(100vh - 64px);
-  background-color: black;
+  background-color: rgb(15, 15, 15);
 `;
 
 export const MainLayout = ({ children }: { children: ReactNode }) => {

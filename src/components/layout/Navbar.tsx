@@ -10,12 +10,12 @@ const StyledHeader = styled(Header)`
   position: fixed;
   z-index: 1;
   width: 100%;
-  background-color: black;
+  background-color: rgb(15, 15, 15);
 `;
 
 const StyledMenu = styled(Menu)`
   line-height: 64px;
-  background-color: black;
+  background-color: rgb(15, 15, 15);
   border-bottom: none;
   height: 64px;
 `;

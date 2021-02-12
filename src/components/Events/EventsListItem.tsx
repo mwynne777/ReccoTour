@@ -3,6 +3,7 @@ import moment from 'moment';
 import LocalEvent from '../../models/Event';
 import { Button } from 'antd';
 import styled, { css } from 'styled-components';
+import { StyledSpotifyButton } from '../SpotifyLoginButton';
 
 const StyledEventListItem = styled.div`
     display: flex;
@@ -43,7 +44,7 @@ const EventsListItem: React.FC<EventsListItemProps> = ({ event }) => {
                 <StyledNoWrapItem>Ticket Prices:</StyledNoWrapItem>
                 <StyledNoWrapItem>{`$${event.priceMin} - $${event.priceMax}`}</StyledNoWrapItem>
             </div>
-            <Button type='primary' size='large' href={event.url} >See Tickets</Button>
+            <StyledSpotifyButton size='large' shape='round' href={event.url} >See Tickets</StyledSpotifyButton>
         </StyledEventListItem>
     );
 };

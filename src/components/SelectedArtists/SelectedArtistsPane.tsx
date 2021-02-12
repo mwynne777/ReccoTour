@@ -9,7 +9,7 @@ const StyledSelectedArtistsPane = styled.div`
     height: 100%;
     padding-top: 20px;
     float: left;
-    background-color: black;
+    background-color: rgb(15, 15, 15);
 `;
 
 const StyledSelectedArtistsListWrapper = styled.div`
