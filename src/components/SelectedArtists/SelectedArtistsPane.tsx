@@ -10,6 +10,11 @@ const StyledSelectedArtistsPane = styled.div`
     padding-top: 20px;
     float: left;
     background-color: rgb(15, 15, 15);
+
+    .ant-card-body {
+        padding: 0px;
+        height: calc(100% - 106.5px);
+    }
 `;
 
 const StyledSelectedArtistsListWrapper = styled.div`
@@ -30,7 +35,7 @@ export const SelectedArtistsPane = () => {
         </>;
 
     return (
-        <StyledSelectedArtistsPane className="SelectedArtistsPane" >
+        <StyledSelectedArtistsPane >
             <StyledSelectedArtistsListWrapper>
                 <Card title={title} style={{ height: "100%", border: 'none' }}>
                     <SelectedArtistsList />

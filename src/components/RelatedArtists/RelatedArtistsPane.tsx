@@ -12,6 +12,18 @@ const StyledSubmitButton = styled(StyledSpotifyButton)`
     margin: 30px 50px 0px 0px;
 `;
 
+const StyledRelatedArtistsPane = styled.div`
+    width: 50%;
+    height: 100%;
+    padding-top: 20px;
+    float: right;
+
+    .ant-card-body {
+        padding: 0px;
+        height: calc(100% - 56px);
+    }
+`;
+
 export const RelatedArtistsPane = () => {
     const Tour = useContext(TourContext);
 
@@ -26,13 +38,13 @@ export const RelatedArtistsPane = () => {
     }
 
     return (
-        <div className="RelatedArtistsPane">
+        <StyledRelatedArtistsPane>
             <RelatedArtists />
             <Link href='/events'>
                 <StyledSubmitButton disabled={Tour.selectedArtists.length === 0} shape='round'>
                     Find Tickets <Icon type="arrow-right" />
                 </StyledSubmitButton>
             </Link>
-        </div>
+        </StyledRelatedArtistsPane>
     );
 }
