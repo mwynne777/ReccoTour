@@ -11,7 +11,7 @@ export default function MyApp({ Component, pageProps }) {
   const { user } = useFetchUser();
 
   useEffect(() => {
-    tour.setTourFields({ token: user ? user[spotifyTokenName] : null });
+    tour.init({ token: user ? user[spotifyTokenName] : null });
   }, [user]);
 
   return <TourContext.Provider value={tour}><Component {...pageProps} /></TourContext.Provider>

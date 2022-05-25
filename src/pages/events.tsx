@@ -5,8 +5,6 @@ import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
 import { AutoComplete, Button, DatePicker, Input, Layout } from 'antd';
-const { Option } = AutoComplete;
-const { RangePicker } = DatePicker;
 import { SelectValue } from 'antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
 import { Artist } from '../models/Artist';
@@ -14,6 +12,8 @@ import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
 import EventsList from '../components/Events/EventsList';
 import styled from 'styled-components';
 import { StyledSpotifyButton } from '../components/SpotifyLoginButton';
+const { Option } = AutoComplete;
+const { RangePicker } = DatePicker;
 
 const StyledEventsPageTitle = styled.h2`
     color: white;
@@ -78,6 +78,7 @@ export default function Events() {
         if (resultJson._embedded) {
             console.log(resultJson._embedded.events);
             const newEvents = resultJson._embedded.events.map(event => mapTicketmasterEventToLocalEvent(event));
+            console.log('Setting events to: ', [...events, ...newEvents])
             setEvents(oldEvents => [...oldEvents, ...newEvents]);
         }
         setCallsRemaining(oldRemaining => oldRemaining - 1);
@@ -113,7 +114,7 @@ export default function Events() {
                         disabledDate={isDateDisabled}
                         onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
                     <StyledEventsSearchButton onClick={onSubmit} shape='round'>Search for events</StyledEventsSearchButton>
-                    {callsRemaining === 0 && events.length > 0 &&
+                    {callsRemaining <= 0 && events.length > 0 &&
                         <EventsList events={events} />
                     }
                 </>

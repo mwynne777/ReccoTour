@@ -8,8 +8,20 @@ import { useFetchUser } from '../utils/user';
 import { spotifyTokenName } from '../utils/auth0';
 import styled from 'styled-components';
 
+export const media = {
+  desktop: '@media(min-width: 1000px)'
+}
+
 const StyledIndex = styled.div`
   height: calc(100% - 32px); /* seems to be necessary now b/c wrapping div */
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+
+  ${media.desktop} {
+    display: flex;
+    flex-flow: row nowrap;
+  }
 
   .ant-card {
     background-color: rgb(28, 28, 28);

@@ -13,10 +13,9 @@ const StyledSubmitButton = styled(StyledSpotifyButton)`
 `;
 
 const StyledRelatedArtistsPane = styled.div`
-    width: 50%;
     height: 100%;
     padding-top: 20px;
-    float: right;
+    flex: 1 1 0px;
 
     .ant-card-body {
         padding: 0px;

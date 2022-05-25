@@ -5,11 +5,10 @@ import Card from 'antd/lib/card';
 import styled, { css } from 'styled-components';
 
 const StyledSelectedArtistsPane = styled.div`
-    width: 50%;
     height: 100%;
     padding-top: 20px;
-    float: left;
     background-color: rgb(15, 15, 15);
+    flex: 1 1 0px;
 
     .ant-card-body {
         padding: 0px;
