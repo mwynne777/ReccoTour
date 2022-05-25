@@ -1,6 +1,6 @@
 import React from 'react';
 import List from 'antd/lib/list';
-import LocalEvent from '../../models/Event';
+import { LocalEvent } from '../../models/Event';
 import EventsListItem from './EventsListItem';
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ const StyledEventsList = styled(List)`
     background-color: rgb(24, 24, 24);
 `;
 
-interface EventsListProps {
+type EventsListProps = {
     events: LocalEvent[]
 }
 

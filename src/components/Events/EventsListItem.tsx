@@ -1,8 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import LocalEvent from '../../models/Event';
-import { Button } from 'antd';
-import styled, { css } from 'styled-components';
+import { LocalEvent } from '../../models/Event';
+import styled from 'styled-components';
 import { StyledSpotifyButton } from '../SpotifyLoginButton';
 
 const StyledEventListItem = styled.div`
@@ -24,7 +23,7 @@ const StyledEventTitle = styled.h3`
     color: white;
 `;
 
-interface EventsListItemProps {
+type EventsListItemProps = {
     event: LocalEvent
 }
 

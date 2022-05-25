@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback } from 'react';
 import moment from 'moment';
 import { RateLimiter } from 'limiter';
 import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
-import { AutoComplete, Button, DatePicker, Input, Layout } from 'antd';
+import { AutoComplete, DatePicker} from 'antd';
 import { SelectValue } from 'antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
 import { Artist } from '../models/Artist';
-import LocalEvent, { mapTicketmasterEventToLocalEvent } from '../models/Event';
+import { LocalEvent, mapTicketmasterEventToLocalEvent } from '../models/Event';
 import EventsList from '../components/Events/EventsList';
 import styled from 'styled-components';
 import { StyledSpotifyButton } from '../components/SpotifyLoginButton';
@@ -23,7 +23,7 @@ const StyledEventsSearchButton = styled(StyledSpotifyButton)`
     margin-left: 5px;
 `;
 
-interface LocationWithCodes {
+type LocationWithCodes = {
     city: string,
     countryCode: string,
     stateCode: string

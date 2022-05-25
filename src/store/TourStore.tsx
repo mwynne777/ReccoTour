@@ -7,8 +7,7 @@ export const depTour: TourDependent = {
 };
 
 export const indTour: TourIndependent = {
-    token: null,
-    dummy: 0
+    token: null
   };
 
 export const TourContext = createContext<Tour>(null);
