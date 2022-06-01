@@ -16,6 +16,13 @@ const StyledContent = styled(Content)`
   background-color: rgb(15, 15, 15);
 `;
 
+const StyledSpinnerContainer = styled.div`
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+`;
+
 export const MainLayout = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useFetchUser();
 
@@ -25,7 +32,9 @@ export const MainLayout = ({ children }: { children: ReactNode }) => {
         <Navbar />
         <StyledContent>
           {loading &&
-            <Spin size="large" />
+            <StyledSpinnerContainer>
+              <Spin size="large" />
+            </StyledSpinnerContainer>
           }
           {user && !loading ?
             children

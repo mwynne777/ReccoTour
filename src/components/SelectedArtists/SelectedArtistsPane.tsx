@@ -29,7 +29,7 @@ export const SelectedArtistsPane = () => {
 
     const title =
         <>
-            <StyledTitle>Here are your top artists on Spotify: </StyledTitle>
+            <StyledTitle>Your top 10 artists according to Spotify:</StyledTitle>
             <AutoComplete />
         </>;
 

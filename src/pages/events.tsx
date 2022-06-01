@@ -4,7 +4,7 @@ import pThrottle from 'p-throttle';
 import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
-import { AutoComplete, DatePicker} from 'antd';
+import { AutoComplete, DatePicker, Spin} from 'antd';
 import { SelectValue } from 'antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
 import { LocalEvent, mapTicketmasterEventToLocalEvent } from '../models/Event';
@@ -22,24 +22,40 @@ const StyledEventsSearchButton = styled(StyledSpotifyButton)`
     margin-left: 5px;
 `;
 
+const StyledSpinnerContainer = styled.div`
+    margin-top: 32px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+`;
+
 type LocationWithCodes = {
     city: string,
     countryCode: string,
     stateCode: string
 }
 
+type PageState = 'initial' | 'loading' | 'loaded'
+
+const pageStateTitle: Record<PageState, string> = {
+    initial: 'Where and when do you want to see your favorite artists?',
+    loading: 'Hang tight, we\'re finding shows from your favorite artists...',
+    loaded: 'Here are the upcoming shows from your favorite artists!'
+}
+
 const throttle = pThrottle({
-    limit: 5,
+    limit: 4, // 5 is the limit, but getting failures when set to 5
     interval: 1000
   })
 
 export default function Events() {
     const tour = useContext(TourContext);
-    const { user, loading } = useFetchUser();
+    const { user } = useFetchUser();
     const [selectedCity, setSelectedCity] = useState<string>('');
     const [autoFillLocations, setAutoFillLocations] = useState([]);
     const [selectedDates, setSelectedDates] = useState<[moment.Moment, moment.Moment]>([moment(), moment().add(1, 'w')]);
     const [events, setEvents] = useState<LocalEvent[]>([]);
+    const [pageState, setPageState] = useState<keyof typeof pageStateTitle>('initial')
 
     const getGoogleAutoComplete = async (value: SelectValue) => {
         // TODO: Add Google Places types
@@ -72,6 +88,7 @@ export default function Events() {
     }, []);
 
     const onSubmit = async () => {
+        setPageState('loading')
         const locationCodes = getLocationCodes(selectedCity);
         const selectedArtists = tour.selectedArtists.concat(tour.relatedArtists)
         // TODO: look into oibackoff (or something simlar) for retrying failed requests
@@ -86,13 +103,14 @@ export default function Events() {
             }
         })
         setEvents(events);
+        setPageState('loaded')
     };
 
     return (
         <MainLayout>
             {(user && user[spotifyTokenName]) &&
                 <>
-                    <StyledEventsPageTitle>Where and when do you want to see your favorite artists?</StyledEventsPageTitle>
+                    <StyledEventsPageTitle>{pageStateTitle[pageState]}</StyledEventsPageTitle>
                     <AutoComplete
                         onChange={(value) => getGoogleAutoComplete(value)}
                         onSelect={(value) => setSelectedCity(value.toString())}
@@ -108,8 +126,11 @@ export default function Events() {
                         disabledDate={isDateDisabled}
                         onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
                     <StyledEventsSearchButton onClick={onSubmit} shape='round'>Search for events</StyledEventsSearchButton>
-                    {events.length > 0 &&
-                        <EventsList events={events} />
+                    { pageState === 'loading' 
+                        ? <StyledSpinnerContainer><Spin size="large" /></StyledSpinnerContainer>
+                        : pageState === 'loaded'
+                            ? <EventsList events={events} />
+                            : null
                     }
                 </>
             }
