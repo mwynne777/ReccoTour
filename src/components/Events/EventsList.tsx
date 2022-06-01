@@ -5,8 +5,10 @@ import EventsListItem from './EventsListItem';
 import styled from 'styled-components';
 
 const StyledEventsList = styled(List)`
-    margin-top: 10px;
+    margin-top: 16px;
     background-color: rgb(24, 24, 24);
+    height: calc(100vh - 250px);
+    overflow-y: auto;
 `;
 
 type EventsListProps = {

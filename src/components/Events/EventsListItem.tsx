@@ -43,7 +43,7 @@ const EventsListItem: React.FC<EventsListItemProps> = ({ event }) => {
                 <StyledNoWrapItem>Ticket Prices:</StyledNoWrapItem>
                 <StyledNoWrapItem>{`$${event.priceMin} - $${event.priceMax}`}</StyledNoWrapItem>
             </div>
-            <StyledSpotifyButton size='large' shape='round' href={event.url} >See Tickets</StyledSpotifyButton>
+            <StyledSpotifyButton size='large' shape='round' href={event.url} >Tickets</StyledSpotifyButton>
         </StyledEventListItem>
     );
 };

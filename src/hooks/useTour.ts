@@ -39,7 +39,7 @@ export const useTour = (): Tour => {
 
 			setIndState((oldState) => ({ ...oldState }))
 		},
-		[indState.token]
+		[indState.token, dispatch]
 	)
 
 	const removeSelectedArtist = useCallback((artist: Artist) => {

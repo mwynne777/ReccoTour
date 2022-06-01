@@ -1,13 +1,12 @@
 import React, { useContext, useState, useCallback } from 'react';
 import moment from 'moment';
-import { RateLimiter } from 'limiter';
+import pThrottle from 'p-throttle';
 import { MainLayout } from '../components/layout/MainLayout';
 import { TourContext } from '../store/TourStore';
 import { useFetchUser } from '../utils/user';
 import { AutoComplete, DatePicker} from 'antd';
 import { SelectValue } from 'antd/lib/select';
 import { spotifyTokenName } from '../utils/auth0';
-import { Artist } from '../models/Artist';
 import { LocalEvent, mapTicketmasterEventToLocalEvent } from '../models/Event';
 import EventsList from '../components/Events/EventsList';
 import styled from 'styled-components';
@@ -29,8 +28,10 @@ type LocationWithCodes = {
     stateCode: string
 }
 
-// Trying 10ms of buffer to avoid hitting rate limit
-var limiter = new RateLimiter(1, 210);
+const throttle = pThrottle({
+    limit: 5,
+    interval: 1000
+  })
 
 export default function Events() {
     const tour = useContext(TourContext);
@@ -39,7 +40,6 @@ export default function Events() {
     const [autoFillLocations, setAutoFillLocations] = useState([]);
     const [selectedDates, setSelectedDates] = useState<[moment.Moment, moment.Moment]>([moment(), moment().add(1, 'w')]);
     const [events, setEvents] = useState<LocalEvent[]>([]);
-    const [callsRemaining, setCallsRemaining] = useState<number>(tour.selectedArtists.concat(tour.relatedArtists).length);
 
     const getGoogleAutoComplete = async (value: SelectValue) => {
         // TODO: Add Google Places types
@@ -71,42 +71,36 @@ export default function Events() {
         return currentDate < moment().subtract(1, 'd') || currentDate > moment().add(1, 'y');
     }, []);
 
-    const callTicketmasterAPI = async (selectedArtist: Artist, locationCodes: LocationWithCodes) => {
-        const uri = `/discovery/v2/events?apikey=${process.env.ticketmasterAPIKey}&keyword=${selectedArtist.name}&radius=50&unit=miles&locale=*&city=${locationCodes.city}&stateCode=${locationCodes.stateCode}&countryCode=US`;
-        const result = await fetch(uri);
-        const resultJson = await result.json();
-        if (resultJson._embedded) {
-            console.log(resultJson._embedded.events);
-            const newEvents = resultJson._embedded.events.map(event => mapTicketmasterEventToLocalEvent(event));
-            console.log('Setting events to: ', [...events, ...newEvents])
-            setEvents(oldEvents => [...oldEvents, ...newEvents]);
-        }
-        setCallsRemaining(oldRemaining => oldRemaining - 1);
-    };
-
-    const onSubmit = () => {
+    const onSubmit = async () => {
         const locationCodes = getLocationCodes(selectedCity);
         const selectedArtists = tour.selectedArtists.concat(tour.relatedArtists)
         // TODO: look into oibackoff (or something simlar) for retrying failed requests
-        selectedArtists.forEach(element => {
-            limiter.removeTokens(1, function () {
-                callTicketmasterAPI(element, locationCodes);
-            });
-        });
+        const responses = await Promise.all(selectedArtists.map(artist => 
+            throttle(() => fetch(`/discovery/v2/events?apikey=${process.env.ticketmasterAPIKey}&keyword=${artist.name}&radius=50&unit=miles&locale=*&city=${locationCodes.city}&stateCode=${locationCodes.stateCode}&countryCode=US`))()
+        ));
+        const jsonResponses = await Promise.all(responses.map(result => result.json()))
+        jsonResponses.map(resp => {
+            if (resp._embedded) {
+                const localEvents = resp._embedded.events.map(event => mapTicketmasterEventToLocalEvent(event))
+                localEvents.forEach(e => events.push(e))
+            }
+        })
+        setEvents(events);
     };
 
     return (
         <MainLayout>
             {(user && user[spotifyTokenName]) &&
                 <>
-                    <StyledEventsPageTitle>Finally, tell us where and when you want to see your favorite artists:</StyledEventsPageTitle>
+                    <StyledEventsPageTitle>Where and when do you want to see your favorite artists?</StyledEventsPageTitle>
                     <AutoComplete
                         onChange={(value) => getGoogleAutoComplete(value)}
                         onSelect={(value) => setSelectedCity(value.toString())}
                         allowClear
                         dataSource={autoFillLocations}
                         placeholder='Enter your location'
-                        style={{ width: '225px', marginRight: '5px' }} />
+                        style={{ width: '225px', marginRight: '5px' }} 
+                    />
                     <RangePicker
                         style={{ marginRight: '5px' }}
                         format='MM-DD-YYYY'
@@ -114,7 +108,7 @@ export default function Events() {
                         disabledDate={isDateDisabled}
                         onCalendarChange={(dates: [moment.Moment, moment.Moment]) => setSelectedDates(dates)} />
                     <StyledEventsSearchButton onClick={onSubmit} shape='round'>Search for events</StyledEventsSearchButton>
-                    {callsRemaining <= 0 && events.length > 0 &&
+                    {events.length > 0 &&
                         <EventsList events={events} />
                     }
                 </>
